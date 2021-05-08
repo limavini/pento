@@ -3,8 +3,15 @@ defmodule PentoWeb.WrongLive do
   alias IEx.Info
   # socket is the state for a live view
   # assign puts data into the socket
-  def mount(_params, _session, socket) do
-    {:ok, assign(socket, score: 0, message: "Guess a number.", victory: false)}
+  def mount(_params, session, socket) do
+    {:ok,
+     assign(socket,
+       score: 0,
+       message: "Guess a number.",
+       victory: false,
+       user: Pento.Accounts.get_user_by_session_token(session["user_token"]),
+       session_id: session["live_socket_id"]
+     )}
   end
 
   # score and message are keys of the socket.assigns map
@@ -14,7 +21,7 @@ defmodule PentoWeb.WrongLive do
       <h2><%= @message %></h2>
 
       <h2>
-        <%= for n <- 1..3 do %>
+        <%= for n <- 1..10 do %>
         <a href="#" phx-click="guess" phx-value-number="<%= n%>"><%= n%></a>
         <% end %>
       </h2>
@@ -24,11 +31,16 @@ defmodule PentoWeb.WrongLive do
         <h2>Congratulations, you won!</h2>
         <% end %>
 
+        <pre>
+          <%= @user.email %>
+          <%= @user.username %>
+          <%= @session_id %>
+        </pre>
     """
   end
 
   # "guess" is the event name triggered by phx-click
-  def handle_event("guess", %{"number" => guess} = data, socket) do
+  def handle_event("guess", %{"number" => guess}, socket) do
     assign =
       socket
       |> is_correct?(String.to_integer(guess))
@@ -47,7 +59,7 @@ defmodule PentoWeb.WrongLive do
   end
 
   def random_num() do
-    Enum.random(1..3)
+    Enum.random(1..10)
   end
 
   def is_correct?(socket, number) do
