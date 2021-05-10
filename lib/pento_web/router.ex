@@ -36,6 +36,8 @@ defmodule PentoWeb.Router do
     # /guess is the path
     # WrongLive is the module that handles this request
     live "/guess", WrongLive
+
+    live "/promo", PromoLive
   end
 
   # Other scopes may use custom stacks.

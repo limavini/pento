@@ -17,6 +17,10 @@ defmodule Pento.Catalog.Product do
   @doc false
   # changeset/2 transform a struct into a changeset
   # returns a struct with %{valid?: boolean} so you can validate
+
+  # Changeset ensures data safety
+  # Changeset casts unustructured data into a known one.
+  # Ensure a common interface for responses
   def changeset(product, attrs) do
     # Struct that we want to change
     product
