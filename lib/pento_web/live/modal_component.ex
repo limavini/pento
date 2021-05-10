@@ -1,7 +1,10 @@
 defmodule PentoWeb.ModalComponent do
+  # Follow the Phoenix.LiveComponent behaviour
   use PentoWeb, :live_component
 
   @impl true
+  # assigns are the values included in modal_opts on live_helpers.ex
+  # The phx- events will be sent to the target at phx-target
   def render(assigns) do
     ~L"""
     <div id="<%= @id %>" class="phx-modal"

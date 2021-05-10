@@ -1,4 +1,15 @@
 defmodule PentoWeb.ProductLive.Index do
+  # LiveView is a GenServer
+  # LiveView is controlled by a behaviour
+  # The behaviour calls mount and then render
+  # We're not in control about what really happens under the hood
+  # The behaviour controls the flow of our LiveView
+
+  # CRC -> Construct, Reduce, Convert
+
+  # <%= %> renders everytime the values inside of it changes
+  # <% %> renders only on mount stage
+
   use PentoWeb, :live_view
 
   alias Pento.Catalog
@@ -6,10 +17,16 @@ defmodule PentoWeb.ProductLive.Index do
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, assign(socket, :products, list_products())}
+    {:ok,
+     socket
+     # adds a key: value pair to socket :assigns
+     # you can access these values using @greeting on an .leex file
+     |> assign(:greeting, "Welcome to Pento!")
+     |> assign(:products, list_products())}
   end
 
   @impl true
+  # Runs before mount/3
   def handle_params(params, _url, socket) do
     {:noreply, apply_action(socket, socket.assigns.live_action, params)}
   end

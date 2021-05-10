@@ -1,4 +1,5 @@
-<h1>Listing Products</h1>
+<h1><%= @greeting %></h1>
+<h2>Listing Products</h2>
 
 <%= if @live_action in [:new, :edit] do %>
   <%= live_modal @socket, PentoWeb.ProductLive.FormComponent,
@@ -30,6 +31,7 @@
 
         <td>
           <span><%= live_redirect "Show", to: Routes.product_show_path(@socket, :show, product) %></span>
+          <%# Adds "edit" to the :live_action key on socket assigns %>
           <span><%= live_patch "Edit", to: Routes.product_index_path(@socket, :edit, product) %></span>
           <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: product.id, data: [confirm: "Are you sure?"] %></span>
         </td>
