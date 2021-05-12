@@ -38,6 +38,8 @@ defmodule PentoWeb.Router do
     live "/guess", WrongLive
 
     live "/promo", PromoLive
+
+    live "/search", SearchLive
   end
 
   # Other scopes may use custom stacks.

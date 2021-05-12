@@ -18,9 +18,21 @@
   <%= number_input f, :unit_price, step: "any" %>
   <%= error_tag f, :unit_price %>
 
+
   <%= label f, :sku %>
   <%= number_input f, :sku %>
   <%= error_tag f, :sku %>
 
+<div phx-drop-target="<%= @uploads.image.ref %>">
+  <%= live_file_input @uploads.image %>
+</div>
+<%= hidden_input f, :image_upload %>
   <%= submit "Save", phx_disable_with: "Saving..." %>
+
+  <%= for entry <- @uploads.image.entries do %>
+<p>
+<%= entry.client_name %> - <%= entry.progress %>%
+</p>
+<% end %>
+
 </form>

@@ -18,8 +18,7 @@ defmodule Pento.Catalog do
 
   import Ecto.Query, warn: false
   alias Pento.Repo
-
-  alias Pento.Catalog.Product
+  alias Pento.Catalog.{Product, Search}
 
   @doc """
   Returns the list of products.
@@ -124,6 +123,16 @@ defmodule Pento.Catalog do
     else
       %{valid?: false} = changeset -> changeset
       {:error, reason} -> IO.puts("Unable to update price. #{reason}")
+      e -> e
+    end
+  end
+
+  def search_product(%{"sku" => sku} = attrs) do
+    with %{valid?: true} <- Search.changeset(%Search{}, attrs),
+         Ecto.Schema = result <- Repo.get_by(Product, sku: sku) do
+      result
+    else
+      %{valid?: false} = changeset -> changeset
       e -> e
     end
   end
