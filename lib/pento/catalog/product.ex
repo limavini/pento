@@ -4,6 +4,8 @@ defmodule Pento.Catalog.Product do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias Pento.Survey.Rating
+
   # Schema is like a translation between the database table and elixir
   schema "products" do
     field :description, :string
@@ -13,6 +15,8 @@ defmodule Pento.Catalog.Product do
     field :image_upload, :string
 
     timestamps()
+
+    has_many :ratings, Rating
   end
 
   @doc false

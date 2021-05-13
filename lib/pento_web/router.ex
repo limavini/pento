@@ -40,6 +40,8 @@ defmodule PentoWeb.Router do
     live "/promo", PromoLive
 
     live "/search", SearchLive
+
+    live "/survey", SurveyLive, :index
   end
 
   # Other scopes may use custom stacks.
